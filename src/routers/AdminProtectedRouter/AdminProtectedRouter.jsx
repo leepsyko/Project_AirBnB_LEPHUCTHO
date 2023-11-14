@@ -4,15 +4,13 @@ import { useUserContext } from "../../context/UserContext";
 
 export default function AdminProtectedRouter({ children }) {
   const { currentUser } = useUserContext();
-  const location = useLocation();
 
   if (!currentUser) {
-    const url = `/log-in?redirectTo=${location.pathname}`;
-    return <Navigate to={url} replace />;
+    return <Navigate to={"/"} replace />;
   }
 
   if (currentUser?.user?.role?.toUpperCase() !== "ADMIN") {
-    return <Navigate to="/Access" replace />;
+    return <Navigate to="*" replace />;
   }
   return children || <Outlet />;
 }

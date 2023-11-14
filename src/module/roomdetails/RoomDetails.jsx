@@ -39,6 +39,7 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import RoomComments from "./RoomComments/RoomComments";
 import { useUserContext } from "../../context/UserContext";
 import { toast } from "react-toastify";
+import LoadingPage from "../../components/LoadingPage/LoadingPage";
 
 const SecondaryButton = styled(Button)`
   text-transform: none;
@@ -58,7 +59,7 @@ export default function RoomDetails() {
   const [guestQuantity, setGuestQuantity] = useState(1);
   const { roomId } = useParams();
 
-  const { data: room = [] } = useQuery({
+  const { data: room = [], isLoading } = useQuery({
     queryKey: ["roomdetails", roomId],
     queryFn: () => getRoomDetailsById(roomId),
     enabled: !!roomId,
@@ -144,10 +145,14 @@ export default function RoomDetails() {
     setEndDate(e.target.value);
   };
 
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
   return (
     <Fragment>
       <Container>
-        <Grid container>
+        <Grid my="50px" container>
           {/* TITLE */}
           <Grid py={2} item xs={12}>
             <Typography variant="h5" fontWeight="bold">
@@ -514,6 +519,7 @@ export default function RoomDetails() {
                       onClick={() => handleBookingRoom(room.id)}
                       sx={{ fontWeight: "bold", mt: 1 }}
                       variant="contained"
+                      disabled={currentUser?.user?.role === "ADMIN"}
                       fullWidth
                     >
                       Đặt Phòng

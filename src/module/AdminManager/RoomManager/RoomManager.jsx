@@ -30,19 +30,20 @@ import LastPageIcon from "@mui/icons-material/LastPage";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SearchIcon from "@mui/icons-material/Search";
-// import Loading from "../../../../Components/Loading";
-// import { ButtonCustom, ButtonMain } from "../../../../Components/Button";
-// import { deleteRoom, getRooms } from "../../../../APIs/roomApi";
-// import { ModalContent, ModalWidth } from "../../../../Components/Modal";
 import AddRooms from "./AddRooms";
 import UpdateRoom from "./UpdateRoom";
 import ModalUpLoadImg from "./ModalUpLoadImg";
-// import ModalErro from "../../../../Components/Modal/ModalErro";
 import Loading from "../../../components/Loading";
 import { ButtonSign } from "../../../components/Button/ButtonCustom";
 import { deleteRoom, getRooms } from "../../../apis/roomManager";
 import { ModalContent, ModalWidth } from "../../../components/ModalPopup/ModalPopup";
 import ModalErrorCustomer from "../../../components/Modal/ModalErrorCustomer";
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
+
+
+
+
+
 function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -199,8 +200,6 @@ export default function RoomManager() {
 
   return (
     <>
-
-
       <div style={{ textAlign: 'right' }}>
         <Box
           sx={{
@@ -240,46 +239,6 @@ export default function RoomManager() {
           Thêm phòng
         </ButtonSign>
       </div>
-      {/* <Box height={100} />
-      <Box display={"flex"} justifyContent={"right"} mb={2}>
-        <Box
-          sx={{
-            width: 500,
-            maxWidth: "100%",
-            marginRight: "16px",
-            display: "flex",
-          }}
-        >
-          <TextField
-            fullWidth
-            label="Tìm kiếm theo tên phòng"
-            id="fullWidth"
-            color="secondary"
-            value={searchQuery}
-            onChange={handleSearchInputChange} // Handle input change
-            onKeyDown={handleEnterKeyDown}
-          />
-
-          <Button
-            variant="contained"
-            color="info"
-            onClick={() => {
-              filterLocations();
-            }}
-          >
-            <SearchIcon />
-          </Button>
-        </Box>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => {
-            setOpenAddRoom(true);
-          }}
-        >
-          Thêm phòng
-        </Button>
-      </Box> */}
 
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 500 }} aria-label="infor pagination table">
@@ -448,11 +407,7 @@ export default function RoomManager() {
         }}
       >
         <ModalContent>
-          <img
-            style={{ width: "120px", marginTop: "10px" }}
-            src="/img/animation_lnov06bj_small.gif"
-            alt="confirm"
-          />
+          <ConfirmationNumberIcon />
           <Typography
             variant="h6"
             sx={{

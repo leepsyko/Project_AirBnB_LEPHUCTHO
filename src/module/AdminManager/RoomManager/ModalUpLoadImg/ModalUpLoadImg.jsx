@@ -7,11 +7,7 @@ import { upLoadImgRoom } from "../../../../apis/roomManager";
 import { ButtonSign } from "../../../../components/Button/ButtonCustom";
 import { ModalContent, ModalSuccess } from "../../../../components/ModalPopup/ModalPopup";
 import ModalErrorCustomer from "../../../../components/Modal/ModalErrorCustomer";
-// import { ModalContent, ModalSuccess } from "../../../../../Components/Modal";
-// import { upLoadImgRoom } from "../../../../../APIs/roomApi";
-// import { ButtonMain } from "../../../../../Components/Button";
-// import ModalErro from "../../../../../Components/Modal/ModalErro";
-
+import DoneIcon from '@mui/icons-material/Done';
 
 
 
@@ -144,10 +140,7 @@ export default function ModalAvatar({ roomId, onClose, roomImg }) {
         {showSuccessModal && (
           <ModalSuccess>
             <ModalContent>
-              <img
-                style={{ width: "120px", marginTop: "10px" }}
-                src="/img/animation_lnfs5c14_small.gif"
-                alt="confirm"
+              <DoneIcon
               />
               <Typography
                 variant="h5"

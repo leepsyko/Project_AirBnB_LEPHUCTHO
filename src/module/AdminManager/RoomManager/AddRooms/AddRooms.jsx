@@ -16,18 +16,18 @@ import {
   InputLabel,
 } from "@mui/material";
 import Switch from "@mui/material/Switch";
-// import { ButtonMain } from "../../../../../Components/Button";
 import { object, string, number } from "yup";
-// import { addRoom } from "../../../../../APIs/roomApi";
-// import { getLocation } from "../../../../../APIs/locationApi";
-// import { ModalContent, ModalSuccess } from "../../../../../Components/Modal";
-// import Loading from "../../../../../Components/Loading";
-// import * as ButtonCustom from "../../../../components/Button/ButtonCustom";
 import { addRoom } from "../../../../apis/roomManager";
 import { getLocation, getLocationManager } from "../../../../apis/locationApi";
 import Loading from "../../../../components/Loading";
 import { ModalContent, ModalSuccess } from "../../../../components/ModalPopup/ModalPopup";
 import { ButtonSign } from "../../../../components/Button/ButtonCustom";
+import DoneIcon from '@mui/icons-material/Done';
+
+
+
+
+
 
 //MUI switch
 const IOSSwitch = styled((props) => (
@@ -432,11 +432,7 @@ export default function AddRooms({ onClose }) {
       {showSuccessModal && (
         <ModalSuccess>
           <ModalContent>
-            <img
-              style={{ width: "120px", marginTop: "10px" }}
-              src="/img/animation_lnfs5c14_small.gif"
-              alt="confirm"
-            />
+            <DoneIcon />
             <Typography
               variant="h5"
               sx={{ fontWeight: "bold", marginBottom: "40px" }}

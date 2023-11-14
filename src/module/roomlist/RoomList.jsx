@@ -12,12 +12,13 @@ import {
   styled,
 } from "@mui/material";
 import currencyFormat from "../../currencyFomat";
+import LoadingPage from "../../components/LoadingPage/LoadingPage";
 
 export default function RoomList() {
   const navigate = useNavigate();
   const { locationId } = useParams();
 
-  const { data: roomList = [] } = useQuery({
+  const { data: roomList = [], isLoading } = useQuery({
     queryKey: ["roomlist", locationId],
     queryFn: () => getRoomListById(locationId),
     enabled: !!locationId,
@@ -141,10 +142,14 @@ export default function RoomList() {
     });
   };
 
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
   return (
     <Fragment>
       <Container>
-        <Box mt="50px" component="div">
+        <Box my="50px" component="div">
           <Typography sx={{ fontWeight: "bold" }} variant="h5">
             Chỗ ở tại khu vực đã chọn
           </Typography>

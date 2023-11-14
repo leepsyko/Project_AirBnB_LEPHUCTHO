@@ -411,13 +411,18 @@ export default function Header() {
             {!currentUser ? (
               <MenuItem onClick={handleOpenSignUp}>Đăng Ký</MenuItem>
             ) : null}
-            {currentUser && (
+            {currentUser?.user?.role === "USER" ? (
               <MenuItem
                 onClick={() => navigate(`profile/${currentUser?.user?.id}`)}
               >
                 Trang thông tin cá nhân
               </MenuItem>
-            )}
+            ) : null}
+            {currentUser?.user?.role === "ADMIN" ? (
+              <MenuItem onClick={() => navigate("/manager")}>
+                Trang Quản Lý
+              </MenuItem>
+            ) : null}
             {currentUser && (
               <MenuItem onClick={handleSignOutContext}>Đăng xuất</MenuItem>
             )}

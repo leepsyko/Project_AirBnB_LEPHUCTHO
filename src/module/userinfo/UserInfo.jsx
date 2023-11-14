@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getUserById, updateUser, updateUserImg } from "../../apis/userApi";
+import { getInfoID, updateUser, updateUserImg } from "../../apis/userApi";
 import {
   Avatar,
   Box,
@@ -26,6 +26,7 @@ import { object, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { colorConfigs } from "../../configs/colorConfigs";
 import { toast } from "react-toastify";
+import LoadingPage from "../../components/LoadingPage/LoadingPage";
 
 const userSchema = object({
   name: string().required("Trường hợp bắt buộc."),
@@ -104,9 +105,9 @@ export default function UserInfo() {
     mode: "onTouched",
   });
 
-  const { data: user = [] } = useQuery({
+  const { data: user = [], isLoading } = useQuery({
     queryKey: ["userInfo", userId],
-    queryFn: () => getUserById(userId),
+    queryFn: () => getInfoID(userId),
     enabled: !!userId,
   });
 
@@ -186,10 +187,14 @@ export default function UserInfo() {
     }
   }, [user]);
 
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
   return (
     <Fragment>
       <Container>
-        <Grid mt="50px" spacing={2} component="div" container>
+        <Grid my="50px" spacing={2} component="div" container>
           <Grid item xs={12} sm={12} md={4}>
             <Box component={Paper} elevation={3} p={2}>
               {/* USER IMG */}

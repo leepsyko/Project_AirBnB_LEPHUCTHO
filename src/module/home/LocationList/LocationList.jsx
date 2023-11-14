@@ -6,9 +6,10 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useNavigate } from "react-router-dom";
 import { colorConfigs } from "../../../configs/colorConfigs";
+import LoadingPage from "../../../components/LoadingPage/LoadingPage";
 
 export default function LocationList() {
-  const { data: location = [] } = useQuery({
+  const { data: location = [], isLoading } = useQuery({
     queryKey: ["locations"],
     queryFn: getLocation,
   });
@@ -97,10 +98,14 @@ export default function LocationList() {
     });
   };
 
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
   return (
     <Fragment>
       <Container>
-        <Grid mt="50px" component="div" container spacing={3}>
+        <Grid my="50px" component="div" container spacing={3}>
           {location && renderLocationList(location)}
         </Grid>
       </Container>

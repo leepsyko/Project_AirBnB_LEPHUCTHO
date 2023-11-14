@@ -18,8 +18,11 @@ import { editUser, getInfoID } from "../../../../apis/userApi";
 import Loading from "../../../../components/Loading";
 import { ButtonSign } from "../../../../components/Button/ButtonCustom";
 import ModalErrorCustomer from "../../../../components/Modal/ModalErrorCustomer";
-import { ModalContent, ModalSuccess } from "../../../../components/ModalPopup/ModalPopup";
-
+import {
+  ModalContent,
+  ModalSuccess,
+} from "../../../../components/ModalPopup/ModalPopup";
+import DoneIcon from "@mui/icons-material/Done";
 
 const styleSign = {
   position: "absolute",
@@ -32,7 +35,6 @@ const styleSign = {
   boxShadow: 24,
   p: 4,
 };
-
 
 const updateShema = object({
   name: string().required("Tên không được để trống"),
@@ -222,17 +224,15 @@ export default function EditUser({ userId, onClose }) {
         >
           Cập Nhật
         </ButtonSign>
-        <ButtonSign onClick={onClose}>Đóng</ButtonSign>
+        <ButtonSign variant="contained" onClick={onClose}>
+          Đóng
+        </ButtonSign>
       </form>
 
       {showSuccessModal && (
         <ModalSuccess>
           <ModalContent>
-            <img
-              style={{ width: "120px", marginTop: "10px" }}
-              src="/img/animation_lnfs5c14_small.gif"
-              alt="confirm"
-            />
+            <DoneIcon />
             <Typography
               variant="h5"
               sx={{ fontWeight: "bold", marginBottom: "40px" }}

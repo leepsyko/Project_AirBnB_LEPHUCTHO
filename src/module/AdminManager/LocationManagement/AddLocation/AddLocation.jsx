@@ -1,0 +1,151 @@
+import React from "react";
+import { Box, Grid, TextField, Typography } from "@mui/material";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { object, string } from "yup";
+import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { addLocation } from "../../../../apis/locationApi";
+import { ButtonSign } from "../../../../components/Button/ButtonCustom";
+import {
+  ModalContent,
+  ModalSuccess,
+} from "../../../../components/ModalPopup/ModalPopup";
+import DoneIcon from "@mui/icons-material/Done";
+
+export default function AddLocation({ onClose }) {
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  const queryClient = useQueryClient();
+
+  const addUserSchema = object({
+    tenViTri: string().required("Vị trí không được để trống"),
+    tinhThanh: string().required("Tỉnh thành không được để trống"),
+
+    quocGia: string().required("Quốc gia không được để trống"),
+    hinhAnh: string().required("Hình ảnh không được để trống"),
+  });
+
+  const { mutate: handleAddLocation } = useMutation({
+    mutationFn: (payload) => {
+      return addLocation(payload);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["location"]);
+      setShowSuccessModal(true);
+    },
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      tenViTri: "",
+      tinhThanh: "",
+      quocGia: "",
+      hinhAnh: "",
+    },
+    resolver: yupResolver(addUserSchema),
+    mode: "onTouched",
+  });
+
+  const handleCloseSuccess = () => {
+    setShowSuccessModal(false);
+    onClose();
+  };
+
+  return (
+    <Box>
+      <Typography variant="h5" gutterBottom>
+        ✍️✍️Thêm vị trí
+      </Typography>
+      <Box
+        component="form"
+        noValidate
+        autoComplete="off"
+        mt={2}
+        onSubmit={handleSubmit(handleAddLocation)}
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <TextField
+              label="Tên vị trí"
+              variant="outlined"
+              fullWidth
+              error={!!errors.tenViTri}
+              helperText={errors.tenViTri?.message}
+              {...register("tenViTri")}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              label="Tỉnh Thành"
+              variant="outlined"
+              fullWidth
+              error={!!errors.tinhThanh}
+              helperText={errors.tinhThanh?.message}
+              {...register("tinhThanh")}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              label="Quốc gia"
+              variant="outlined"
+              fullWidth
+              error={!!errors.quocGia}
+              helperText={errors.quocGia?.message}
+              {...register("quocGia")}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              label="Hình Ảnh"
+              fullWidth
+              error={!!errors.hinhAnh}
+              helperText={errors.hinhAnh?.message}
+              {...register("hinhAnh")}
+            />
+          </Grid>
+        </Grid>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+            gap: "5px",
+          }}
+        >
+          <ButtonSign variant="contained" type="submit">
+            Thêm vị trí
+          </ButtonSign>
+          <ButtonSign variant="contained" onClick={onClose}>
+            Đóng
+          </ButtonSign>
+        </Box>
+      </Box>
+      {showSuccessModal && (
+        <ModalSuccess>
+          <ModalContent>
+            <DoneIcon />
+            <Typography
+              variant="h5"
+              sx={{ fontWeight: "bold", marginBottom: "40px" }}
+            >
+              Thêm Vị Trí Thành Công
+            </Typography>
+
+            <ButtonSign
+              variant="contained"
+              color="primary"
+              onClick={handleCloseSuccess}
+            >
+              Đồng ý
+            </ButtonSign>
+          </ModalContent>
+        </ModalSuccess>
+      )}
+    </Box>
+  );
+}
